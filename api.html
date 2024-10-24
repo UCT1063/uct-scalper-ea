@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>MT5 Copy Trading Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            width: 300px;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        #account-info {
+            margin-top: 20px;
+            text-align: center;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>MT5 Dashboard</h2>
+        <p>Your account is authenticated!</p>
+        <div id="account-info">Loading account info...</div>
+    </div>
+
+    <script>
+        // MT5 API credentials (replace with actual credentials from your broker)
+        const API_URL = 'https://mt5api.broker.com/api';  // Replace with your MT5 API URL
+        const API_KEY = 'YOUR_API_KEY'; // Replace with your API key
+        const ACCOUNT_ID = 'YOUR_ACCOUNT_ID'; // Replace with your account ID
+
+        // Function to fetch account information from MT5 API
+        async function fetchAccountInfo() {
+            try {
+                const response = await fetch(`/account/`, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer `
+                    }
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    document.getElementById('account-info').textContent = 
+                        `Balance: , Equity: `;
+                } else {
+                    document.getElementById('account-info').textContent = 'Error fetching account info';
+                }
+            } catch (error) {
+                console.error('Error fetching account info:', error);
+                document.getElementById('account-info').textContent = 'Error fetching account info';
+            }
+        }
+
+        // Fetch account info on page load
+        window.onload = fetchAccountInfo;
+    </script>
+
+</body>
+</html>
